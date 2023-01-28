@@ -1,8 +1,7 @@
 pipeline{
     agent any
-    
-    environment{
-        PATH = "/opt/maven3/bin:$PATH"
+    tools{
+    maven'maven'
     }
     stages{
         stage("Git Checkout"){
@@ -20,11 +19,11 @@ pipeline{
             steps{
                 sshagent(['tomcat-new']) {
                 sh """
-                    scp -o StrictHostKeyChecking=no target/web-application.war  ec2-user@172.31.11.183:/home/ec2-user/apache-tomcat-9.0.71/webapps/
+                    scp -o StrictHostKeyChecking=no target/web-application.war  ec2-user@172.31.41.241:/home/ec2-user/apache-tomcat-10.0.27/webapps/
                     
-                    ssh ec2-user@172.31.11.183 /home/ec2-user/apache-tomcat-9.0.64/bin/shutdown.sh
+                    ssh ec2-user@172.31.41.241 /home/ec2-user/apache-tomcat-9.0.64/bin/shutdown.sh
                     
-                    ssh ec2-user@172.31.11.183 /home/ec2-user/apache-tomcat-9.0.64/bin/startup.sh
+                    ssh ec2-user@172.31.41.241 /home/ec2-user/apache-tomcat-9.0.64/bin/startup.sh
                 
                 """
             }
