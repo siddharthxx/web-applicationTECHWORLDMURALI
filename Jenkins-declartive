@@ -1,4 +1,5 @@
-pipeline{
+pipeline
+{
     agent any
     tools{
     maven'maven'
@@ -11,17 +12,14 @@ pipeline{
         }
         stage("Maven Build"){
             steps{
-                sh "mvn clean package     
+                sh "mvn clean package"    
             }
         }
         stage("deploy-dev"){
             steps{
-                deploy adapters: [tomcat10(credentialsId:'tomcat-new', path: '', url: 'http://http://18.130.246.92:8080')], contextPath: null, war: '**/*.war'
-                
-                """
-            }
-            
+                deploy adapters: [tomcat9(credentialsId:'tomcat-new', path: '', url: 'http://13.41.70.16:8080')], contextPath: null, war: '**/*.war'
             }
         }
+        
     }
 }
