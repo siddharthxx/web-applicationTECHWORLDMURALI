@@ -12,7 +12,7 @@ pipeline{
         stage("Maven Build"){
             steps{
                 sh "mvn clean package"
-                sh "mvn target/*.war target/web-application.war"
+                sh "mvn target/*.war target/web-application war file.war"
                 
             }
         }
@@ -20,7 +20,7 @@ pipeline{
             steps{
                 sshagent(['tomcat-new']) {
                 sh """
-                    scp -o StrictHostKeyChecking=no target/web-application.war  ec2-user@172.31.41.241:/home/ec2-user/apache-tomcat-10.0.27/webapps/
+                    scp -o StrictHostKeyChecking=no target/web-application war file.war  ec2-user@172.31.41.241:/home/ec2-user/apache-tomcat-10.0.27/webapps/
                     
                     ssh ec2-user@172.31.41.241 /home/ec2-user/apache-tomcat-10.0.27/bin/shutdown.sh
                     
